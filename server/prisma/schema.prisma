@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Champion {
+  id               String                   @id @default(cuid())
+  apiName          String?                  @unique
+  fallbackSlug     String                   @unique
+  imageSlug        String?
+  name             String
+  cost             Int
+  imageUrl         String?
+  powerScore       Float?
+  rawJson          Json?
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+  traits           ChampionTrait[]
+  stats            ChampionStat[]
+  ability          Ability?
+  recommendedItems ChampionRecommendedItem[]
+
+  @@index([name])
+}
+
+model Trait {
+  id         String          @id @default(cuid())
+  name       String
+  slug       String          @unique
+  iconUrl    String?
+  rawJson    Json?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  champions  ChampionTrait[]
+
+  @@index([name])
+}
+
+model ChampionTrait {
+  championId String
+  traitId    String
+  champion   Champion @relation(fields: [championId], references: [id], onDelete: Cascade)
+  trait      Trait    @relation(fields: [traitId], references: [id], onDelete: Cascade)
+
+  @@id([championId, traitId])
+  @@index([traitId])
+}
+
+model ChampionStat {
+  id          String   @id @default(cuid())
+  championId  String
+  starLevel   Int
+  hp          Int?
+  ad          Int?
+  ap          Float?
+  armor       Float?
+  mr          Float?
+  attackSpeed Float?
+  critChance  Float?
+  critDamage  Float?
+  range       Int?
+  manaInitial Int?
+  manaMax     Int?
+  champion    Champion @relation(fields: [championId], references: [id], onDelete: Cascade)
+
+  @@unique([championId, starLevel])
+  @@index([starLevel])
+}
+
+model Ability {
+  id             String   @id @default(cuid())
+  championId     String   @unique
+  title          String?
+  manaText       String?
+  descriptionRaw String?
+  rawJson        Json?
+  champion       Champion @relation(fields: [championId], references: [id], onDelete: Cascade)
+}
+
+model ChampionRecommendedItem {
+  id              String   @id @default(cuid())
+  championId      String
+  itemApiName     String
+  position        Int
+  statsSampleSize Int?
+  avgPlacement    Float?
+  pickRate        Float?
+  rawJson         Json?
+  champion        Champion @relation(fields: [championId], references: [id], onDelete: Cascade)
+
+  @@unique([championId, position])
+  @@index([itemApiName])
+}

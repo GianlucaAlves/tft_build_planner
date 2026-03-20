@@ -1,0 +1,7 @@
+https://data.metatft.com/locales/{{lng}}.json
+https://data.metatft.com/lookups/
+https://data.metatft.com/lookups/latest_TFTSet10_tables.json
+https://data.metatft.com/lookups/latest_TFTSet15_tables.json
+https://data.metatft.com/lookups/latest_TFTSet16_tables.json
+https://data.metatft.com/lookups/trait_mapping.json
+https://data.metatft.com/unit_descriptions.json
