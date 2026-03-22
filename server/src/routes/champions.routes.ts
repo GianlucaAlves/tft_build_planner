@@ -1,9 +1,9 @@
 import {Router, Request, Response} from 'express';
+import {getChampions, getChampionById} from '../controllers/champions.controller';
 
-const championsRouter = Router();
+ const championsRouter = Router();
 
-championsRouter.get("/", (req: Request, res: Response) => {
-    res.send("Hello world!!!")
-})
+championsRouter.get('/', getChampions);
+championsRouter.get('/:id', getChampionById);
 
 export default championsRouter;
