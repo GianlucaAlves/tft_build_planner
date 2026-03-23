@@ -1,7 +1,11 @@
+import {ChampionsList} from './components/ChampionsList';
+
+
+
 function App(){
   return (
-    <div className="App">
-      <h1>Welcome to the App!</h1>
+    <div className="flexjustify-center items-center min-h-screen">
+      <ChampionsList />
     </div>
   );
 }

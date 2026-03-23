@@ -2,18 +2,19 @@
   "name": "tft-build-planner-server",
   "version": "0.1.0",
   "private": true,
-  
   "scripts": {
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
     "seed:set16": "node --env-file=.env scripts/import-metatft-set.mjs",
-    "dev":"ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0"
+    "@prisma/client": "^6.5.0",
+    "cors": "^2.8.6"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
     "prisma": "^6.5.0",
