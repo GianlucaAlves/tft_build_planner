@@ -1,9 +1,17 @@
 import {Request, Response} from 'express';
-import {listChampions, listChampionById} from '../services/championsService';
+import {listChampions, listChampionById, listChampionByName} from '../services/championsService';
 
 export  async function getChampions(req: Request, res: Response){
     try{
-        const champions = await listChampions();
+        const {name} = req.query;
+        const take = Number(req.query.take) || 25;
+        const skip = Number(req.query.skip) || 0 ;
+        if(typeof name === 'string'){
+            const champions = await listChampionByName(name);
+            return res.json(champions); 
+        }
+        
+        const champions = await listChampions(skip, take);   
         res.json(champions);
     }catch (error) {
         res.status(500).json({error: "Erro ao buscar os campeões"});
